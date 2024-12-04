@@ -1,86 +1,120 @@
+# -*- coding:utf-8 -*-
+
 import pygame
 import time
+import os
+import asyncio
+from cmngr import ClassManagerLatr, ClassManagerHptr
 
-class ClassManager:
-    def __init__(self):
-        self._path_start =""
-        self._path_end = ""
-        self._path_30second = ""
-        self._path_1minute = ""
+async def latr():
+    """下腹トレーニング
+    """
+    delay_seconds = 20 / 2 # 間隔 
+    data_dir = "./data/latr"
+    classmanager = ClassManagerLatr()
+    classmanager.path_start = os.path.join(data_dir ,"StartProcess.wav")
+    classmanager.path_end = os.path.join(data_dir ,"EndProcess.wav")
+    classmanager.last_10_seconds = os.path.join(data_dir ,"Last10Seconds.wav")
+    classmanager.chapter_1 = os.path.join(data_dir ,"Chapter1.wav")
+    classmanager.chapter_2 = os.path.join(data_dir ,"Chapter2.wav")
+    classmanager.chapter_3 = os.path.join(data_dir ,"Chapter3.wav")
+    classmanager.chapter_4 = os.path.join(data_dir ,"Chapter4.wav")
+    classmanager.chapter_5 = os.path.join(data_dir ,"Chapter5.wav")
+    classmanager.chapter_6 = os.path.join(data_dir ,"Chapter6.wav")
+    classmanager.chapter_7 = os.path.join(data_dir ,"Chapter7.wav")
+    classmanager.chapter_8 = os.path.join(data_dir ,"Chapter8.wav")
+    classmanager.chapter_9 = os.path.join(data_dir ,"Chapter9.wav")
 
-    @property
-    def path_start(self):
-        return self._path_start
-    
-    @path_start.setter
-    def path_start(self, value):
-        """Setter: path_start の値を設定"""
-        if not isinstance(value, str):
-            raise ValueError("path_start must be a string")
-        self._path_start = value
+    # 開始ボイス
+    await play_sound(classmanager.path_start)
 
-    @property
-    def path_end(self):
-        return self._path_end
-    
-    @path_end.setter
-    def path_end(self, value):
-        """Setter: path_end の値を設定"""
-        if not isinstance(value, str):
-            raise ValueError("path_end must be a string")
-        self._path_end = value
+    # Chapter1
+    await play_sound(classmanager.chapter_1)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
 
-    @property
-    def path_30second(self):
-        return self._path_30second
-    
-    @path_30second.setter
-    def path_30second(self, value):
-        """Setter: path_30second の値を設定"""
-        if not isinstance(value, str):
-            raise ValueError("path_30second must be a string")
-        self._path_30second = value
+    # Chapter2
+    await play_sound(classmanager.chapter_2)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
 
-    @property
-    def path_1minute(self):
-        return self._path_1minute
-    
-    @path_1minute.setter
-    def path_1minute(self, value):
-        """Setter: path_1minute の値を設定"""
-        if not isinstance(value, str):
-            raise ValueError("path_1minute must be a string")
-        self._path_1minute = value              
+    # Chapter3
+    await play_sound(classmanager.chapter_3)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
 
-def main():
-    classmanager = ClassManager()
-    classmanager.path_start = "./data/StartProcess.wav"
-    classmanager.path_end = "./data/EndProcess.wav"
-    classmanager.path_30second = "./data/30Second.wav"
-    classmanager.path_1minute = "./data/1Minute.wav"
-    loop_count = 4
-    delay_seconds = 30
+    # Chapter4
+    await play_sound(classmanager.chapter_4)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # Chapter5
+    await play_sound(classmanager.chapter_5)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # Chapter6
+    await play_sound(classmanager.chapter_6)
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # Chapter7
+    await play_sound(classmanager.chapter_7)    
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # Chapter8
+    await play_sound(classmanager.chapter_8)    
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # Chapter9
+    await play_sound(classmanager.chapter_9)    
+    time.sleep(delay_seconds)
+    await play_sound(classmanager.last_10_seconds)
+    time.sleep(delay_seconds)
+
+    # 終了ボイス
+    await play_sound(classmanager.path_end)
+
+async def hptr():
+    """ヒップトレーニング
+    """
+    loop_count = 4 # 試行回数
+    delay_seconds = 30 # 間隔 
+    data_dir = "./data/hptr"
+    classmanager = ClassManagerHptr()
+    classmanager.path_start = "./data/hptr/StartProcess.wav"
+    classmanager.path_end = "./data/hptr/EndProcess.wav"
+    classmanager.path_30second = "./data/hptr/30Second.wav"
+    classmanager.path_1minute = "./data/hptr/1Minute.wav"
 
     for i in range(loop_count):
 
         # 開始ボイス
-        if i == 0: play_sound(classmanager.path_start)
+        if i == 0: await play_sound(classmanager.path_start)
 
         # 30秒の休止
         time.sleep(delay_seconds)
-        play_sound(classmanager.path_30second)
+        await play_sound(classmanager.path_30second)
 
         # 30秒の休止
         time.sleep(delay_seconds)
-        play_sound(classmanager.path_1minute)
+        await play_sound(classmanager.path_1minute)
 
     # 終了ボイス
-    play_sound(classmanager.path_end)
+    await play_sound(classmanager.path_end)
 
-
-def play_sound(file_path):
-    """
-    指定されたWAVファイルを再生する関数
+async def play_sound(file_path):
+    """指定されたWAVファイルを再生する
     """
     try:
         # Pygameの初期化
@@ -104,4 +138,5 @@ def play_sound(file_path):
         pygame.mixer.quit()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(latr())
+    # asyncio.run(hptr())
