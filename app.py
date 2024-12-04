@@ -86,7 +86,7 @@ async def latr():
     await play_sound(classmanager.path_end)
 
 async def hptr():
-    """ヒップトレーニング
+    """左右トレーニング
     """
     loop_count = 4 # 試行回数
     delay_seconds = 30 # 間隔 
