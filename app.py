@@ -3,29 +3,48 @@
 import pygame
 import time
 import os
-import asyncio
+import tkinter as tk
+import threading
 from cmngr import ClassManagerLatr, ClassManagerHptr
 
 def main():
-    while True:
-        print("\n=== トレーニングメニュー ===")
-        print("1. 下腹トレーニング")
-        print("2. ヒップトレーニング")
-        print("3. 終了")
-        choice = input("選択肢を入力してください (1-3): ")
-        if choice == "1":
-            print("\n--- 下腹トレーニングを選択しました ---")
-            asyncio.run(latr())
-        elif choice == "2":
-            print("\n--- ヒップトレーニングを選択しました ---")
-            asyncio.run(hptr())
-        elif choice == "3":
-            print("\nメニューを終了します。お疲れ様でした！")
-            break
-        else:
-            print("\n無効な選択です。もう一度入力してください。")
+    root = tk.Tk()
+    root.title("interval timer")
+    root.geometry("100x100")  # ウィンドウサイズを200x300に設定
 
-async def latr():
+    label = tk.Label(root, text="training menu", font=("Arial", 10))
+    label.pack(pady=0)
+
+    button_frame = tk.Frame(root)
+    button_frame.pack(pady=0)
+
+    btn_latr = tk.Button(
+        button_frame, text="latr", font=("Arial", 10),
+        command=lambda: start_thread(latr)
+    )
+    btn_latr.pack(side=tk.LEFT)
+
+    btn_hptr = tk.Button(
+        button_frame, text="hptr", font=("Arial", 10),
+        command=lambda: start_thread(hptr)
+    )
+    btn_hptr.pack(side=tk.LEFT)
+
+    # 終了ボタン
+    btn_exit = tk.Button(root, text="finish", font=("Arial", 10), command=root.destroy)
+    btn_exit.pack(pady=0)
+
+    root.mainloop()
+
+# スレッドで関数を実行
+def start_thread(target):
+    """スレッド処理開始
+    """
+    thread = threading.Thread(target=target)
+    thread.daemon = True
+    thread.start()
+
+def latr():
     """下腹トレーニング
     """
     delay_seconds = 20 / 2 # 間隔 
@@ -45,94 +64,94 @@ async def latr():
     classmanager.chapter_9 = os.path.join(data_dir ,"Chapter9.wav")
 
     # 開始ボイス
-    await play_sound(classmanager.path_start)
+    play_sound(classmanager.path_start)
 
     # Chapter1
-    await play_sound(classmanager.chapter_1)
+    play_sound(classmanager.chapter_1)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter2
-    await play_sound(classmanager.chapter_2)
+    play_sound(classmanager.chapter_2)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter3
-    await play_sound(classmanager.chapter_3)
+    play_sound(classmanager.chapter_3)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter4
-    await play_sound(classmanager.chapter_4)
+    play_sound(classmanager.chapter_4)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter5
-    await play_sound(classmanager.chapter_5)
+    play_sound(classmanager.chapter_5)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter6
-    await play_sound(classmanager.chapter_6)
+    play_sound(classmanager.chapter_6)
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter7
-    await play_sound(classmanager.chapter_7)    
+    play_sound(classmanager.chapter_7)    
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter8
-    await play_sound(classmanager.chapter_8)    
+    play_sound(classmanager.chapter_8)    
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # Chapter9
-    await play_sound(classmanager.chapter_9)    
+    play_sound(classmanager.chapter_9)    
     time.sleep(delay_seconds)
-    await play_sound(classmanager.last_10_seconds)
+    play_sound(classmanager.last_10_seconds)
     time.sleep(delay_seconds)
 
     # 終了ボイス
-    await play_sound(classmanager.path_end)
+    play_sound(classmanager.path_end)
 
-async def hptr():
+def hptr():
     """左右トレーニング
     """
     loop_count = 4 # 試行回数
     delay_seconds = 30 # 間隔 
     data_dir = "./data/hptr"
     classmanager = ClassManagerHptr()
-    classmanager.path_start = "./data/hptr/StartProcess.wav"
-    classmanager.path_end = "./data/hptr/EndProcess.wav"
-    classmanager.path_30second = "./data/hptr/30Second.wav"
-    classmanager.path_1minute = "./data/hptr/1Minute.wav"
+    classmanager.path_start = os.path.join(data_dir, "StartProcess.wav")
+    classmanager.path_end = os.path.join(data_dir, "EndProcess.wav")
+    classmanager.path_30second = os.path.join(data_dir, "30Second.wav")
+    classmanager.path_1minute = os.path.join(data_dir, "1Minute.wav")
 
     for i in range(loop_count):
 
         # 開始ボイス
-        if i == 0: await play_sound(classmanager.path_start)
+        if i == 0: play_sound(classmanager.path_start)
 
         # 30秒の休止
         time.sleep(delay_seconds)
-        await play_sound(classmanager.path_30second)
+        play_sound(classmanager.path_30second)
 
         # 30秒の休止
         time.sleep(delay_seconds)
-        await play_sound(classmanager.path_1minute)
+        play_sound(classmanager.path_1minute)
 
     # 終了ボイス
-    await play_sound(classmanager.path_end)
+    play_sound(classmanager.path_end)
 
-async def play_sound(file_path):
+def play_sound(file_path):
     """指定されたWAVファイルを再生する
     """
     try:
@@ -158,5 +177,3 @@ async def play_sound(file_path):
 
 if __name__ == "__main__":
     main()
-    # asyncio.run(latr())
-    # asyncio.run(hptr())
