@@ -6,6 +6,25 @@ import os
 import asyncio
 from cmngr import ClassManagerLatr, ClassManagerHptr
 
+def main():
+    while True:
+        print("\n=== トレーニングメニュー ===")
+        print("1. 下腹トレーニング")
+        print("2. ヒップトレーニング")
+        print("3. 終了")
+        choice = input("選択肢を入力してください (1-3): ")
+        if choice == "1":
+            print("\n--- 下腹トレーニングを選択しました ---")
+            asyncio.run(latr())
+        elif choice == "2":
+            print("\n--- ヒップトレーニングを選択しました ---")
+            asyncio.run(hptr())
+        elif choice == "3":
+            print("\nメニューを終了します。お疲れ様でした！")
+            break
+        else:
+            print("\n無効な選択です。もう一度入力してください。")
+
 async def latr():
     """下腹トレーニング
     """
@@ -138,5 +157,6 @@ async def play_sound(file_path):
         pygame.mixer.quit()
 
 if __name__ == "__main__":
-    asyncio.run(latr())
+    main()
+    # asyncio.run(latr())
     # asyncio.run(hptr())
